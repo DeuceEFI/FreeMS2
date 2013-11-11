@@ -42,8 +42,8 @@
 
 
 /* Correctly placed in memory due to compiler/linker directives in memory.x and the linker script.	*/
-/* This is the FULL table of length 0xFF starting at 0xFF00 and ending at 0xFFFF, redirected with	*/
-/* jumps to the offset location by the serial monitor starting at 0xF700 and ending at 0xF800		*/
+/* This is the FULL table of length 0x7F starting at 0xFF80 and ending at 0xFFFF, redirected with	*/
+/* jumps to the offset location by the serial monitor starting at 0xF780 and ending at 0xF800		*/
 /* http://m68hc11.serveftp.org/wiki/index.php/FAQ:Interrupts										*/
 const interruptTable _vectors[] VECTORS = {
 
