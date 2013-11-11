@@ -103,13 +103,13 @@ void RTIISR(){
 				Clocks.realTimeClockSeconds++;
 
 				// fuel pump flasher
-				PORTE ^= BIT4;
+				//PORTE ^= BIT4;
 
-				if(PORTM){
-					PORTM = 0x00;
-				}else{
-					PORTM = 0xFF;
-				}
+				//if(PORTM){
+				//	PORTM = 0x00;
+				//}else{
+				//	PORTM = 0xFF;
+				//}
 				/* Increment the seconds roll over variable */
 				Clocks.secondsToMinutes++;
 
@@ -119,8 +119,9 @@ void RTIISR(){
 
 				// temp throttling for log due to tuner performance issues (in the bedroom)
 				ShouldSendLog = TRUE;
-				/* Flash the user LED as a "heartbeat" to let new users know it's alive */
-				//PORTP ^= 0x80;
+			
+				/* Toggle/Flash Port M5 (Yellow LED on Sportster) as a "heartbeat" to let new users know it's alive */
+				PORTM ^= BIT5; // 0b0010_0000 = 0x20 = Port M5
 
 				/* Every 60 seconds is one minute, 65535 minutes is enough for us :-) */
 				if(Clocks.secondsToMinutes % 60 == 0){
@@ -156,6 +157,8 @@ void RTIISR(){
 void TimerOverflow(){
 	/* Increment the timer extension variable */
 	timerExtensionClock++;
+
+	PORTE ^= BIT4; // Toggle Fuel Pump (Sportster Green LED) on Port E4 each time this function is run.
 
 	/* Clear the timer overflow interrupt flag */
 	TFLGOF = 0x80;
